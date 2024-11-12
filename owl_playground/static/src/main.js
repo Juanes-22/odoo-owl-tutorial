@@ -12,8 +12,8 @@ import { Playground } from "./playground";
 import { templates } from "@web/core/assets";
 owl.whenReady( () => {
     mount(Playground, document.body, { templates, dev: true });
+    owl.config.dev = true;
 });
-
 
 /**
  * This code is iterating over the cause property of an error object to console.error a string

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="owl_playground.Counter" owl="1">
+        <div class="card" style="width: 15rem;">
+            <div class="card-body">
+              <h5 class="card-title">Hello world</h5>
+              <p class="card-text">
+                <p>Counter: <t t-esc="state.value" /></p>
+              </p>
+              <button class="btn btn-primary" t-on-click="increment">Increment</button>
+            </div>
+        </div>
+    </t>
+
+</templates>
