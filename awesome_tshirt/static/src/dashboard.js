@@ -1,12 +1,15 @@
 /** @odoo-module **/
 
-import { Component, useSubEnv } from "@odoo/owl";
+import { Component, useSubEnv, onWillStart } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { Layout } from "@web/search/layout";
 import { getDefaultConfig } from "@web/views/view";
 import { Domain } from "@web/core/domain";
 
 import { useService } from "@web/core/utils/hooks";
+
+import { Card } from "./card/card";
+import { PieChart } from "./pie_chart/pie_chart";
 
 class AwesomeDashboard extends Component {
   setup() {
@@ -22,6 +25,21 @@ class AwesomeDashboard extends Component {
     };
 
     this.action = useService("action");
+    this.tshirtService = useService("tshirtService");
+
+    this.keyToString = {
+      average_quantity: "Average amount of t-shirt by order this month",
+      average_time:
+        "Average time for an order to go from 'new' to 'sent' or 'cancelled'",
+      nb_cancelled_orders: "Number of cancelled orders this month",
+      nb_new_orders: "Number of new orders this month",
+      total_amount: "Total amount of new orders this month",
+    };
+
+    onWillStart(async () => {
+      this.statistics = await this.tshirtService.loadStatistics();
+      console.log(this.statistics);
+    });
   }
 
   openCustomerView() {
@@ -38,8 +56,8 @@ class AwesomeDashboard extends Component {
       domain: new Domain(domain).toList(),
       views: [
         [false, "list"],
-        [false, "form"]
-      ]
+        [false, "form"],
+      ],
     });
   }
 
@@ -56,7 +74,7 @@ class AwesomeDashboard extends Component {
   }
 }
 
-AwesomeDashboard.components = { Layout };
+AwesomeDashboard.components = { Layout, Card, PieChart };
 AwesomeDashboard.template = "awesome_tshirt.clientaction";
 
 registry.category("actions").add("awesome_tshirt.dashboard", AwesomeDashboard);
