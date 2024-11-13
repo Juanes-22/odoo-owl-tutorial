@@ -1,6 +1,12 @@
 /** @odoo-module **/
 
-import { Component, useRef, onWillStart, onMounted, onWillUnmount } from "@odoo/owl";
+import {
+  Component,
+  useRef,
+  onWillStart,
+  onMounted,
+  onWillUnmount,
+} from "@odoo/owl";
 import { getColor } from "@web/views/graph/colors";
 import { loadJS } from "@web/core/assets";
 
@@ -46,8 +52,21 @@ export class PieChart extends Component {
           },
         ],
       },
+      options: {
+        onClick: this.onPieClick.bind(this),
+      },
     });
+  }
+
+  onPieClick(ev, chartElem) {
+    const clickedIndex = chartElem[0]._index;
+    this.props.onPieClick(this.labels[clickedIndex]);
   }
 }
 
 PieChart.template = "awesome_tshirt.PieChart";
+PieChart.props = {
+  data: { type: Object },
+  label: { type: String },
+  onPieClick: { type: Function },
+};

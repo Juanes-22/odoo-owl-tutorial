@@ -72,6 +72,12 @@ class AwesomeDashboard extends Component {
       "[('create_date','>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')), ('state', '=', 'cancelled')]";
     this.openOrders("Last 7 days cancelled orders", domain);
   }
+
+  openFilteredBySizeOrders(size) {
+    const title = `Filtered orders by ${size} size`;
+    const domain = `[('size','=', '${size}')]`;
+    this.openOrders(title, domain);
+  }
 }
 
 AwesomeDashboard.components = { Layout, Card, PieChart };
