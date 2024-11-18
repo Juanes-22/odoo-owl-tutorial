@@ -1,10 +1,17 @@
 /** @odoo-module */
 
-import { Component } from "@odoo/owl"
+import { Component } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { CharField } from "@web/views/fields/char/char_field";
 
-class ImagePreviewField extends Component {}
+import { useCommand } from "@web/core/commands/command_hook";
+class ImagePreviewField extends Component {
+  setup() {
+    useCommand("Open image in a new tab", () => {
+      window.open(this.props.value, "_blank");
+    });
+  }
+}
 
 ImagePreviewField.template = "awesome_tshirt.ImagePreviewField";
 ImagePreviewField.components = { CharField };
