@@ -2,6 +2,8 @@
 
 import { registry } from "@web/core/registry";
 import { memoize } from "@web/core/utils/functions";
+import { session } from "@web/session";
+
 
 export const tshirtService = {
   dependencies: ["rpc"],
@@ -9,7 +11,13 @@ export const tshirtService = {
 
   start(env, { rpc }) {
     return {
-      loadStatistics: memoize(() => rpc("/awesome_tshirt/statistics")),
+      loadStatistics: memoize(() => {
+        if (session.tshirt_statistics) {
+          return session.tshirt_statistics;
+        } else {
+          return rpc("/awesome_tshirt/statistics");
+        }
+      }),
     };
   },
 };
