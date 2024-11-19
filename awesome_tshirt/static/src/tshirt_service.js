@@ -4,11 +4,12 @@ import { registry } from "@web/core/registry";
 import { session } from "@web/session";
 
 import { reactive } from "@odoo/owl";
+import { memoize } from "@web/core/utils/functions";
 
 export const tshirtService = {
-  dependencies: ["rpc"],
+  dependencies: ["rpc", "orm"],
 
-  async start(env, { rpc }) {
+  async start(env, { rpc, orm }) {
     const statistics = reactive({});
 
     if (session.tshirt_statistics) {
@@ -22,7 +23,14 @@ export const tshirtService = {
       console.log("Fetching statistics...");
     }, 60000);
 
-    return { statistics };
+    async function loadCustomers() {
+      return await orm.searchRead("res.partner", [], ["display_name"]);
+    }
+
+    return {
+      statistics,
+      loadCustomers: memoize(loadCustomers),
+    };
   },
 };
 
