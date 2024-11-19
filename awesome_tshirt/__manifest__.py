@@ -40,6 +40,12 @@
     'assets': {
         'web.assets_backend': [
             'awesome_tshirt/static/src/**/*',
+            ('remove', 'awesome_tshirt/static/src/dashboard/**/*'),
         ],
+        'awesome_tshirt.dashboard': [
+            ("include", 'web._assets_helpers'), 
+            ('include', 'web._assets_backend_helpers'),
+            'awesome_tshirt/static/src/dashboard/**/*',
+        ]
     }
 }
