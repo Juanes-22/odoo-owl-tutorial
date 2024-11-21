@@ -49,7 +49,6 @@ class AwesomeDashboard extends Component {
       type: "ir.actions.act_window",
       name: title,
       res_model: "awesome_tshirt.order",
-      views: [[false, "form"]],
       search_view_id: [false],
       domain: new Domain(domain).toList(),
       views: [

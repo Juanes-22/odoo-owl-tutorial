@@ -17,7 +17,7 @@ export class CustomerAutocomplete extends Component {
   get sources() {
     return [
       {
-        placeHolder: "Loading...",
+        placeholder: "Loading...",
         options: this.loadOptionsSources.bind(this),
       },
     ];
@@ -73,4 +73,3 @@ export class CustomerAutocomplete extends Component {
 
 CustomerAutocomplete.template = "awesome_tshirt.CustomerAutocomplete";
 CustomerAutocomplete.components = { AutoComplete };
-
